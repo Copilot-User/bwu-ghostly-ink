@@ -22,8 +22,7 @@ public class OpenInkCraftingMenuState implements BotState {
         Supplier<Boolean> shouldProceed = () -> !Interfaces.isOpen(1371);
 
         if (Backpack.interact(Constants.necroplasmPattern, Constants.action)) {
-            var waitRange = FuzzyRandom.shortWaitRange();
-            return new IdleState(waitRange.getLeft(), waitRange.getRight(),
+            return new IdleState(FuzzyRandom::shortWait,
                     (s) -> new Pair<>(shouldProceed.get(), new ClickMakeInkState()));
 
         }

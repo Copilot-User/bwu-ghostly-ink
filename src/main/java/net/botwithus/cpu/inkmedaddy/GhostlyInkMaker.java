@@ -20,7 +20,7 @@ public class GhostlyInkMaker extends LoopingScript {
         CustomLogger.setScript(this);
     }
 
-    private BotState initialState = new IdleState(1000, 2000, (script) -> {
+    private BotState initialState = new IdleState(FuzzyRandom::longWait, (script) -> {
         if (containsIngredients()) {
             return new Pair<>(false, new OpenInkCraftingMenuState());
         }

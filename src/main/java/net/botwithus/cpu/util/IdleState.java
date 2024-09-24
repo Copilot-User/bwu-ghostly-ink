@@ -1,7 +1,7 @@
 package net.botwithus.cpu.util;
 
-import java.util.Random;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import net.botwithus.api.util.collection.Pair;
 import net.botwithus.rs3.game.Client;
@@ -10,26 +10,22 @@ import net.botwithus.rs3.script.LoopingScript;
 
 public class IdleState implements BotState {
 
-    private final int lowerBound;
-    private final int upperBound;
+    private final Supplier<Integer> delayFactory;
     private final Function<LoopingScript, Pair<Boolean, BotState>> shouldIdle;
-    private final Random rand = new Random();
 
-    public IdleState(int lowerBound, int upperBound) {
-        this(lowerBound, upperBound, (script) -> new Pair<>(false, null));
+    public IdleState(Supplier<Integer> delayFactory) {
+        this(delayFactory, (script) -> new Pair<>(false, null));
     }
 
-    public IdleState(int lowerBound, int upperBound,
-            Function<LoopingScript, Pair<Boolean, BotState>> shouldIdle) {
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
+    public IdleState(Supplier<Integer> delayFactory, Function<LoopingScript, Pair<Boolean, BotState>> shouldIdle) {
+        this.delayFactory = delayFactory;
         this.shouldIdle = shouldIdle;
     }
 
     @Override
     public BotState process(LoopingScript script) {
         CustomLogger.log("Idling for a bit...");
-        Execution.delay(rand.nextInt(lowerBound, upperBound));
+        Execution.delay(delayFactory.get());
         var notLoaded = Client.getLocalPlayer() == null;
         if (notLoaded) {
             return this;

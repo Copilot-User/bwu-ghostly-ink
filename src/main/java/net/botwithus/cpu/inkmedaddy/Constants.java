@@ -19,8 +19,7 @@ public class Constants {
     public static final String action = "Craft";
 
     private static final Supplier<BotState> successfullyBanked = () -> {
-        var waitRange = FuzzyRandom.shortWaitRange();
-        return new IdleState(waitRange.getLeft(), waitRange.getRight(),
+        return new IdleState(FuzzyRandom::shortWait,
                 (s) -> new Pair<>(!containsIngredients(), new OpenInkCraftingMenuState()));
     };
 

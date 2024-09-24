@@ -11,8 +11,7 @@ public class WaitUntilInkCraftedState implements BotState {
 
     @Override
     public BotState process(LoopingScript script) {
-        var waitRange = FuzzyRandom.shortWaitRange();
-        return new IdleState(waitRange.getLeft(), waitRange.getRight(),
+        return new IdleState(FuzzyRandom::shortWait,
                 (s) -> new Pair<>(Constants.containsIngredients(), Constants.bankStateFactory.get()));
     }
 

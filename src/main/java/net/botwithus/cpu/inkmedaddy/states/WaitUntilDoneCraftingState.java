@@ -12,8 +12,7 @@ public class WaitUntilDoneCraftingState implements BotState {
 
     @Override
     public BotState process(LoopingScript script) {
-        var waitRange = FuzzyRandom.longWaitRange();
-        return new IdleState(waitRange.getLeft(), waitRange.getRight(), (s) -> new Pair<>(!Interfaces.isOpen(1251),
+        return new IdleState(FuzzyRandom::longWait, (s) -> new Pair<>(!Interfaces.isOpen(1251),
                 Constants.bankStateFactory.get()));
     }
 }

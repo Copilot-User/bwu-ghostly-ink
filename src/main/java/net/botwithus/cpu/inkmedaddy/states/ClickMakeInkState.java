@@ -15,8 +15,7 @@ public class ClickMakeInkState implements BotState {
     @Override
     public BotState process(LoopingScript script) {
         if (MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 89784350)) {
-            var waitRange = FuzzyRandom.shortWaitRange();
-            return new IdleState(waitRange.getLeft(), waitRange.getRight(),
+            return new IdleState(FuzzyRandom::shortWait,
                     (s) -> new Pair<>(Interfaces.isOpen(1486) || Interfaces.isOpen(1251),
                             new WaitUntilInkCraftedState()));
         }
